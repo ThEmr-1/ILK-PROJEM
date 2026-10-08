@@ -1,0 +1,31 @@
+# Direct image requests from root to resimler/ folder
+/360-donus.jpg          /resimler/360-donus.jpg          200
+/540.jpg                /resimler/540.jpg                200
+/back-lever.jpg         /resimler/back-lever.jpg         200
+/front-lever.jpg        /resimler/front-lever.jpg        200
+/geinger-salto.jpg      /resimler/geinger-salto.jpg      200
+/handstand.jpg          /resimler/handstand.jpg          200
+/hspushup.jpg           /resimler/hspushup.jpg           200
+/humanflag.jpg          /resimler/humanflag.jpg          200
+/muscleup.jpg           /resimler/muscleup.jpg           200
+/pistolsquat.jpg        /resimler/pistolsquat.jpg        200
+/planche.jpg            /resimler/planche.jpg            200
+/russian-dips.jpg       /resimler/russian-dips.jpg       200
+/shrimp-flip.jpg        /resimler/shrimp-flip.jpg        200
+/tuckfrontlever.jpg     /resimler/tuckfrontlever.jpg     200
+
+# Legacy root requests with spaces or turkish characters
+/360%20d%C3%B6n%C3%BC%C5%9F.jpg  /resimler/360-donus.jpg   301
+/front%20lever.jpg               /resimler/front-lever.jpg 301
+/back%20lever.jpg                /resimler/back-lever.jpg  301
+/geinger%20salto.jpg             /resimler/geinger-salto.jpg 301
+/russian%20dips.jpg              /resimler/russian-dips.jpg  301
+/shrimp%20flip.jpg               /resimler/shrimp-flip.jpg   301
+
+# Legacy resimler requests with spaces or turkish characters
+/resimler/360%20d%C3%B6n%C3%BC%C5%9F.jpg  /resimler/360-donus.jpg   301
+/resimler/front%20lever.jpg               /resimler/front-lever.jpg 301
+/resimler/back%20lever.jpg                /resimler/back-lever.jpg  301
+/resimler/geinger%20salto.jpg             /resimler/geinger-salto.jpg 301
+/resimler/russian%20dips.jpg              /resimler/russian-dips.jpg  301
+/resimler/shrimp%20flip.jpg               /resimler/shrimp-flip.jpg   301
