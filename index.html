@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHER CALISTHENICS | Yerçekimine Karşı Ustalık</title>
+  
+  <!-- SEO & Sosyal Medya Paylaşım Önizleme Kartları (LinkedIn, WhatsApp, Twitter) -->
+  <meta name="description" content="Aether Calisthenics - Beden ağırlığı ustalığı için akıllı antrenman ve kişisel programlama platformu. Statik, dinamik ve freestyle beceriler, seviye analizi ve AI koç.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AETHER CALISTHENICS | Yerçekimine Karşı Ustalık">
+  <meta property="og:description" content="Beden ağırlığı ustalığı için akıllı antrenman platformu. Statik, Dinamik ve Freestyle beceriler, kişisel seviye analizi ve yapay zeka koçu.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AETHER CALISTHENICS | Yerçekimine Karşı Ustalık">
+  <meta name="twitter:description" content="Kişisel calisthenics antrenman ve programlama platformu.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop">
+
+  <!-- Fontlar & İkonlar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stil Dosyaları -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="brand-logo" onclick="switchSection('home')">
+        <div class="logo-icon"><i class="fa-solid fa-person-running"></i></div>
+        <span>AETHER<span>CALISTHENICS</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#home" class="nav-link active" id="nav-home" onclick="switchSection('home')">Ana Sayfa</a>
+        <a href="#alanlar" class="nav-link" id="nav-alanlar" onclick="switchSection('alanlar')">Alanlar</a>
+        <a href="#hedeflerim" class="nav-link" id="nav-hedeflerim" onclick="switchSection('hedeflerim')">
+          Hedeflerim <span class="badge-count" id="goals-count" style="display:none;">0</span>
+        </a>
+        <a href="#programlarim" class="nav-link" id="nav-programlarim" onclick="switchSection('programlarim')">Programlarım</a>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Giriş Yapmamış Kullanıcı Butonları -->
+        <div id="auth-guest-actions">
+          <button class="btn btn-secondary btn-sm" onclick="openModal('login-modal')">Giriş Yap</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('register-modal')">Kayıt Ol</button>
+        </div>
+
+        <!-- Giriş Yapmış Kullanıcı Menüsü -->
+        <div id="auth-user-actions" style="display:none; align-items:center; gap:12px;">
+          <button class="user-menu-btn" onclick="openAssessmentModal()">
+            <div class="user-avatar" id="nav-user-avatar">U</div>
+            <span class="user-name" id="nav-user-name">Kullanıcı</span>
+            <i class="fa-solid fa-sliders" style="font-size:0.8rem; color:var(--accent-cyan); margin-left:4px;" title="Güç Analizini Düzenle"></i>
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="logoutUser()" title="Çıkış Yap">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+        <!-- Mobil Menü Hamburger Butonu -->
+        <button class="mobile-nav-toggle" id="mobile-nav-toggle" onclick="toggleMobileMenu()" aria-label="Menüyü Aç/Kapat">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobil Açılır Menü (Drawer) -->
+    <div class="mobile-nav-menu" id="mobile-nav-menu">
+      <a href="#home" class="mobile-nav-link active" id="m-nav-home" onclick="switchSectionMobile('home')">
+        <i class="fa-solid fa-house"></i> Ana Sayfa
+      </a>
+      <a href="#alanlar" class="mobile-nav-link" id="m-nav-alanlar" onclick="switchSectionMobile('alanlar')">
+        <i class="fa-solid fa-layer-group"></i> Alanlar
+      </a>
+      <a href="#hedeflerim" class="mobile-nav-link" id="m-nav-hedeflerim" onclick="switchSectionMobile('hedeflerim')">
+        <i class="fa-solid fa-bullseye"></i> Hedeflerim <span class="badge-count" id="m-goals-count" style="display:none;">0</span>
+      </a>
+      <a href="#programlarim" class="mobile-nav-link" id="m-nav-programlarim" onclick="switchSectionMobile('programlarim')">
+        <i class="fa-solid fa-calendar-check"></i> Programlarım
+      </a>
+
+      <!-- Mobil Giriş & Kayıt Butonları -->
+      <div class="mobile-nav-auth" id="m-auth-guest-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openModal('login-modal'); toggleMobileMenu(false);">
+          <i class="fa-solid fa-right-to-bracket"></i> Giriş Yap
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="openModal('register-modal'); toggleMobileMenu(false);">
+          <i class="fa-solid fa-user-plus"></i> Kayıt Ol
+        </button>
+      </div>
+
+      <!-- Giriş Yapmış Kullanıcı İçin Mobil Butonlar -->
+      <div class="mobile-nav-auth" id="m-auth-user-actions" style="display:none;">
+        <button class="btn btn-secondary btn-sm" onclick="openAssessmentModal(); toggleMobileMenu(false);">
+          <i class="fa-solid fa-sliders"></i> Güç Analizi
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="logoutUser(); toggleMobileMenu(false);">
+          <i class="fa-solid fa-right-from-bracket"></i> Çıkış
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== BÖLÜM 1: ANA SAYFA (HOME) ==================== -->
+  <section id="section-home">
+    <!-- Hero Bölümü -->
+    <header class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-text-col">
+          <div class="hero-badge">
+            <i class="fa-solid fa-circle-dot"></i>
+            <span>Yeni Nesil Akıllı Calisthenics Sistemi</span>
+          </div>
+
+          <h1 class="hero-title">
+            Kendi Vücudunla <br>
+            <span class="gradient-text">Yerçekimini Yönet.</span>
+          </h1>
+
+          <p class="hero-desc">
+            Sıkıcı salon antrenmanlarını unut. Freestyle dönüşler, kusursuz heykelsi statikler 
+            ve patlayıcı dinamik hareketlerle vücudunun sınırlarını yeniden çiz. 
+            Güç seviyeni analiz edelim, hedeflerine özel antrenman programını saniyeler içinde inşa edelim.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn btn-primary" onclick="switchSection('alanlar')">
+              <i class="fa-solid fa-layer-group"></i> Alanları Keşfet
+            </button>
+            <button class="btn btn-secondary" onclick="checkAuthAndGoGoals()">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Özel Programımı Oluştur
+            </button>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <h3><span>3</span> Ana Disiplin</h3>
+              <p>Statik, Dinamik, Freestyle</p>
+            </div>
+            <div class="stat-item">
+              <h3><span>100%</span> Bireysel</h3>
+              <p>Darboğaz & Güç Analizi</p>
+            </div>
+            <div class="stat-item">
+              <h3><span>0</span> Ekipman Zorunluluğu</h3>
+              <p>Kendi Ağırlığınla Ustalık</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-glow-bg"></div>
+          <div class="hero-featured-card">
+            <div class="card-img-wrap hero-media-stage">
+              <div class="hero-media-blur-bg" id="hero-blur-bg" style="background-image: url('front-lever.jpg');"></div>
+              <img src="front-lever.jpg" alt="Front Lever" id="hero-card-img" class="hero-media-main-img">
+              <div class="card-img-tag">Günün Hareketi</div>
+            </div>
+            <div class="card-content-header">
+              <h4 id="hero-card-name">Front Lever</h4>
+              <span class="card-level-badge" id="hero-card-level">İleri Seviye</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-muted);" id="hero-card-desc">
+              Yerçekimine meydan okuyan kusursuz yatay kilitlenme. Sırt, omuz ve core gücünün zirvesi.
+            </p>
+            <div class="card-specs">
+              <div class="spec-box">
+                <span>Disiplin</span>
+                <strong id="hero-card-cat">Statik Güç</strong>
+              </div>
+              <div class="spec-box">
+                <span>Temel Eşik</span>
+                <strong id="hero-card-req">15 Barfiks + 45s Hollow</strong>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%; margin-top:18px;" onclick="viewSkillDetails('front-lever')">
+              Hareketi İncele & Detaylar
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Neden Calisthenics? Özellikler Bölümü -->
+    <section class="section" style="background: rgba(14, 18, 26, 0.4);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Akıllı Metodoloji</span>
+          <h2 class="section-title">Nasıl Çalışır?</h2>
+          <p class="section-desc">Her sporcu aynı değildir. Bilimsel calisthenics algoritmasıyla sana en uygun yolu çiziyoruz.</p>
+        </div>
+
+        <div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+          <div class="option-card">
+            <i class="fa-solid fa-bullseye"></i>
+            <h4>1. Hedeflerini Belirle</h4>
+            <p>Freestyle, Statik veya Dinamik alanlardan ustalaşmak istediğin hareketleri seç ve hedeflerine ekle.</p>
+          </div>
+          <div class="option-card">
+            <i class="fa-solid fa-gauge-high"></i>
+            <h4>2. Güç Seviyeni Ölç</h4>
+            <p>Mevcut barfiks, şınav, dips ve amut kapasiteni sisteme gir. Yapay zeka altyapın analiz etsin.</p>
+          </div>
+          <div class="option-card">
+            <i class="fa-solid fa-brain"></i>
+            <h4>3. Darboğaz Tespiti</h4>
+            <p>Güç eksikliğin mi var yoksa teknik odaklanma mı gerekiyor? Algoritma eksiğini netleştirsin.</p>
+          </div>
+          <div class="option-card">
+            <i class="fa-solid fa-calendar-check"></i>
+            <h4>4. Bireysel Haftalık Program</h4>
+            <p>Antrenman günlerine, split tercihine (PPL, Full Body vb.) göre tam sana özel rutin hazır!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ==================== BÖLÜM 2: ALANLAR (DISCIPLINES) ==================== -->
+  <section id="section-alanlar" class="section" style="display:none;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ustalık Disiplinleri</span>
+        <h2 class="section-title">Calisthenics Alanları</h2>
+        <p class="section-desc">
+          İlgi duyduğun alanı seç ve o disipline ait tüm hareketleri keşfet. 
+          Hareketleri hedeflerine ekleyerek kendine özel antrenman programı oluşturabilirsin.
+        </p>
+      </div>
+
+      <!-- Kategori Butonları (Statik, Dinamik, Freestyle) -->
+      <div class="categories-nav">
+        <button class="category-tab-btn active" data-category="statik" onclick="selectCategory('statik')">
+          <i class="fa-solid fa-anchor"></i> Statik (Statics)
+        </button>
+        <button class="category-tab-btn" data-category="dinamik" onclick="selectCategory('dinamik')">
+          <i class="fa-solid fa-bolt"></i> Dinamik (Dynamics)
+        </button>
+        <button class="category-tab-btn" data-category="freestyle" onclick="selectCategory('freestyle')">
+          <i class="fa-solid fa-wind"></i> Freestyle (Serbest Stil)
+        </button>
+      </div>
+
+      <!-- Kategori Bilgi Bannerı -->
+      <div class="category-info-banner" id="category-banner">
+        <div class="category-info-text">
+          <h3 id="category-banner-title">Statik (Statics)</h3>
+          <p id="category-banner-desc">
+            Vücudun yerçekimine karşı belirli bir pozisyonda sabit kilitlendiği, saf izometrik kas ve tendon gücü gerektiren ileri seviye hareketler.
+          </p>
+        </div>
+        <div class="category-banner-stat">
+          <span style="font-size:0.8rem; color:var(--text-dim); text-transform:uppercase;">Toplam Hareket</span>
+          <h4 style="font-size:1.8rem; color:var(--accent-cyan);" id="category-skills-count">5 Hareket</h4>
+        </div>
+      </div>
+
+      <!-- Canlı Arama ve Kas / Zorluk Filtre Paneli -->
+      <div class="skills-filter-toolbar">
+        <div class="filter-search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="skill-search-input" class="filter-search-input" placeholder="Hareket veya kas ara (örn: Planche, Front Lever, Omuz, Biceps)..." oninput="handleSkillSearch(this.value)">
+          <button type="button" class="search-clear-btn" id="search-clear-btn" onclick="clearSkillSearch()" style="display:none;" title="Aramayı Temizle">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="filter-dropdowns-row">
+          <!-- Zorluk Filtresi -->
+          <div class="filter-select-wrap">
+            <label for="filter-difficulty"><i class="fa-solid fa-signal"></i> Zorluk:</label>
+            <select id="filter-difficulty" class="filter-select" onchange="handleDifficultyFilter(this.value)">
+              <option value="all">Tüm Seviyeler</option>
+              <option value="Orta Seviye">Orta Seviye</option>
+              <option value="Orta-İleri">Orta-İleri</option>
+              <option value="İleri Seviye">İleri Seviye</option>
+              <option value="Usta Seviye">Usta Seviye (S Tier)</option>
+            </select>
+          </div>
+
+          <!-- Hedef Kas Grubu Filtresi -->
+          <div class="filter-select-wrap">
+            <label for="filter-muscle"><i class="fa-solid fa-dumbbell"></i> Hedef Kas:</label>
+            <select id="filter-muscle" class="filter-select" onchange="handleMuscleFilter(this.value)">
+              <option value="all">Tüm Kas Grupları</option>
+              <option value="Omuz">Ön & Yan Omuz</option>
+              <option value="Latissimus">Sırt & Latissimus</option>
+              <option value="Biceps">Biceps & Tendon</option>
+              <option value="Triceps">Triceps & İtiş</option>
+              <option value="Core">Core & Karın</option>
+              <option value="Oblik">Oblikler (Yan Karın)</option>
+              <option value="Quadriceps">Bacak & Kalça</option>
+            </select>
+          </div>
+
+          <!-- Kategori Kapsamı -->
+          <div class="filter-scope-toggle">
+            <label class="scope-checkbox-label">
+              <input type="checkbox" id="filter-cross-category" onchange="handleCrossCategoryToggle(this.checked)">
+              <span>Tüm Kategorilerde Ara</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Sonuç Durumu ve Sıfırla -->
+        <div class="filter-results-status">
+          <span id="filter-matched-text">5 hareket listeleniyor</span>
+          <button type="button" class="btn-reset-filters" id="btn-reset-filters" onclick="resetAllFilters()" style="display:none;">
+            <i class="fa-solid fa-rotate-left"></i> Filtreleri Sıfırla
+          </button>
+        </div>
+      </div>
+
+      <!-- Hareketler Grid Listesi -->
+      <div class="skills-grid" id="skills-container">
+        <!-- JavaScript ile dinamik basılacak -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BÖLÜM 3: HEDEFLERİM (MY GOALS) ==================== -->
+  <section id="section-hedeflerim" class="section" style="display:none;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Kişisel Yol Haritası</span>
+        <h2 class="section-title">Hedef Hareketlerim</h2>
+        <p class="section-desc">
+          Seçtiğin hareketler için temel güç durumun kıyaslanır. Eksik güç varsa güç programı, 
+          güç yeterliyse saf teknik aşamalarına odaklanan özel haftalık rutin üretilir.
+        </p>
+      </div>
+
+      <!-- Giriş Yapmamış Kullanıcı Uyarı Paneli -->
+      <div id="goals-guest-alert" class="member-lock-banner" style="display:none; max-width:700px; margin:0 auto 40px;">
+        <h4><i class="fa-solid fa-lock"></i> Özel Program Üyelere Özeldir</h4>
+        <p>Hedef hareketlerini eklemek, güç açığını analiz etmek ve kişisel haftalık program oluşturmak için lütfen ücretsiz üye olun veya giriş yapın.</p>
+        <div style="display:flex; justify-content:center; gap:12px;">
+          <button class="btn btn-primary" onclick="openModal('register-modal')">Ücretsiz Kayıt Ol</button>
+          <button class="btn btn-secondary" onclick="openModal('login-modal')">Giriş Yap</button>
+        </div>
+      </div>
+
+      <!-- Üye Kullanıcı Hedefler Paneli -->
+      <div id="goals-user-panel" style="display:none;">
+        <div class="goals-container">
+          <div class="goals-header">
+            <div>
+              <h3 style="font-size:1.35rem; font-weight:700;">Seçilen Hedef Beceriler</h3>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Aşağıdaki hareketler üzerinde aynı anda ustalaşmak istiyorsun.</p>
+            </div>
+            <div>
+              <button class="btn btn-secondary btn-sm" onclick="switchSection('alanlar')">
+                <i class="fa-solid fa-plus"></i> Daha Fazla Hareket Ekle
+              </button>
+            </div>
+          </div>
+
+          <div class="goals-chips-list" id="goals-list-chips">
+            <!-- Dinamik çipler -->
+          </div>
+
+          <!-- Hedef Bulunmuyorsa Bilgi -->
+          <div id="no-goals-message" style="display:none; text-align:center; padding:30px; color:var(--text-muted);">
+            <i class="fa-solid fa-flag-checkered" style="font-size:2.5rem; color:var(--text-dim); margin-bottom:12px; display:block;"></i>
+            Henüz hiçbir hareket seçmedin. "Alanlar" kısmına gidip ustalaşmak istediğin hareketlerdeki <strong>"Hedeflerime Ekle"</strong> butonuna tıkla!
+            <div style="margin-top:16px;">
+              <button class="btn btn-primary btn-sm" onclick="switchSection('alanlar')">Alanlara Git</button>
+            </div>
+          </div>
+
+          <!-- Güç ve Darboğaz Teşhisi Paneli -->
+          <div class="diagnostic-panel" id="goals-diagnostic-box" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h4 style="font-size:1.1rem; font-weight:700;">
+                <i class="fa-solid fa-microscope" style="color:var(--accent-cyan); margin-right:8px;"></i>
+                Temel Güç vs. Teknik Darboğaz Teşhisi
+              </h4>
+              <button class="btn btn-secondary btn-sm" onclick="openAssessmentModal()">
+                <i class="fa-solid fa-pen-to-square"></i> Güç Bilgilerimi Güncelle
+              </button>
+            </div>
+            <div id="diagnostic-items-container">
+              <!-- Teşhis maddeleri -->
+            </div>
+          </div>
+
+          <!-- Program Sihirbazını Başlatma Kartı -->
+          <div id="start-wizard-banner" style="text-align:center; padding:24px 0 0;" style="display:none;">
+            <button class="btn btn-accent" style="font-size:1.05rem; padding:14px 36px;" onclick="startProgramWizard()">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Akıllı Haftalık Program Sihirbazını Başlat
+            </button>
+          </div>
+        </div>
+
+        <!-- PROGRAM OLUŞTURMA SİHİRBAZI (WIZARD) -->
+        <div class="wizard-box" id="program-wizard" style="display:none;">
+          <div class="step-indicator">
+            <div class="step-dot active" id="dot-step-1"></div>
+            <div class="step-dot" id="dot-step-2"></div>
+            <div class="step-dot" id="dot-step-3"></div>
+            <div class="step-dot" id="dot-step-4"></div>
+          </div>
+
+          <!-- SİHİRBAZ ADIM 1: Sıklık ve Günler -->
+          <div class="wizard-step active" id="wizard-step-1">
+            <h3 style="font-size:1.4rem; font-weight:800; margin-bottom:8px;">1. Adım: Haftalık Antrenman Sıklığı ve Günlerin</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">Haftada kaç gün ve özellikle hangi günlerde spor yapacaksın?</p>
+
+            <label style="font-weight:600; display:block; margin-bottom:10px;">Haftada Kaç Gün?</label>
+            <div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));">
+              <div class="option-card" data-days="2" onclick="selectFrequency(2)"><h4>2 Gün</h4><p>Hafif</p></div>
+              <div class="option-card selected" data-days="3" onclick="selectFrequency(3)"><h4>3 Gün</h4><p>İdeal</p></div>
+              <div class="option-card" data-days="4" onclick="selectFrequency(4)"><h4>4 Gün</h4><p>Gelişmiş</p></div>
+              <div class="option-card" data-days="5" onclick="selectFrequency(5)"><h4>5 Gün</h4><p>Yoğun</p></div>
+            </div>
+
+            <label style="font-weight:600; display:block; margin-top:24px; margin-bottom:10px;">Hangi Günler Antrenman Yapacaksın?</label>
+            <div class="days-selector" id="day-selector-pills">
+              <button type="button" class="day-badge-btn selected" data-day="Pazartesi" onclick="toggleDaySelection(this)">Pazartesi</button>
+              <button type="button" class="day-badge-btn" data-day="Salı" onclick="toggleDaySelection(this)">Salı</button>
+              <button type="button" class="day-badge-btn selected" data-day="Çarşamba" onclick="toggleDaySelection(this)">Çarşamba</button>
+              <button type="button" class="day-badge-btn" data-day="Perşembe" onclick="toggleDaySelection(this)">Perşembe</button>
+              <button type="button" class="day-badge-btn selected" data-day="Cuma" onclick="toggleDaySelection(this)">Cuma</button>
+              <button type="button" class="day-badge-btn" data-day="Cumartesi" onclick="toggleDaySelection(this)">Cumartesi</button>
+              <button type="button" class="day-badge-btn" data-day="Pazar" onclick="toggleDaySelection(this)">Pazar</button>
+            </div>
+
+            <div class="wizard-nav">
+              <div></div>
+              <button class="btn btn-primary" onclick="goToWizardStep(2)">İleri: Program Türü <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- SİHİRBAZ ADIM 2: Program Bölünüşü (Split) -->
+          <div class="wizard-step" id="wizard-step-2">
+            <h3 style="font-size:1.4rem; font-weight:800; margin-bottom:8px;">2. Adım: Nasıl Bir Antrenman Bölünüşü (Split) İstersin?</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">Hedeflediğin hareketler seçtiğin bu bölünüşe göre günlere yerleştirilecektir.</p>
+
+            <div class="options-grid">
+              <div class="option-card selected" data-split="push_pull_legs" onclick="selectSplit('push_pull_legs')">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+                <h4>Push / Pull / Legs (PPL)</h4>
+                <p>İtiş, Çekiş ve Bacak ayrımı. Calisthenics'te en popüler ve kas toparlanması en yüksek split.</p>
+              </div>
+              <div class="option-card" data-split="upper_lower" onclick="selectSplit('upper_lower')">
+                <i class="fa-solid fa-arrows-up-down"></i>
+                <h4>Upper / Lower</h4>
+                <p>Üst Gövde ve Alt Gövde ayrımı. Yoğun statik ve amut antrenmanı için dengeli dağılım.</p>
+              </div>
+              <div class="option-card" data-split="full_body" onclick="selectSplit('full_body')">
+                <i class="fa-solid fa-child-reaching"></i>
+                <h4>Full Body (Tüm Vücut)</h4>
+                <p>Her seansta tüm vücut kas grupları ve beceri aşamaları dengeli şekilde çalışılır.</p>
+              </div>
+              <div class="option-card" data-split="skill_strength" onclick="selectSplit('skill_strength')">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Skill + Strength Hibriti</h4>
+                <p>Bir gün tamamen saf beceri ve denge, sonraki gün ise ağır kuvvet ve hipertrofi temeli.</p>
+              </div>
+            </div>
+
+            <div class="wizard-nav">
+              <button class="btn btn-secondary" onclick="goToWizardStep(1)"><i class="fa-solid fa-arrow-left"></i> Geri</button>
+              <button class="btn btn-primary" onclick="goToWizardStep(3)">İleri: Süre & Ekipman <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- SİHİRBAZ ADIM 3: Süre & Detaylar -->
+          <div class="wizard-step" id="wizard-step-3">
+            <h3 style="font-size:1.4rem; font-weight:800; margin-bottom:8px;">3. Adım: Seans Süresi ve Ekipman Durumu</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">Antrenmanlarının hacmi ve dinlenme aralıkları bu süreye göre optimize edilir.</p>
+
+            <label style="font-weight:600; display:block; margin-bottom:10px;">Ortalama Antrenman Süren</label>
+            <div class="options-grid" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="option-card" data-duration="45" onclick="selectDuration(45)"><h4>45 Dakika</h4><p>Kısa & Yoğun</p></div>
+              <div class="option-card selected" data-duration="60" onclick="selectDuration(60)"><h4>60 Dakika</h4><p>Standart İdeal</p></div>
+              <div class="option-card" data-duration="90" onclick="selectDuration(90)"><h4>90 Dakika</h4><p>İleri Düzey</p></div>
+            </div>
+
+            <div class="wizard-nav">
+              <button class="btn btn-secondary" onclick="goToWizardStep(2)"><i class="fa-solid fa-arrow-left"></i> Geri</button>
+              <button class="btn btn-accent" onclick="finalizeAndBuildProgram()">
+                <i class="fa-solid fa-bolt"></i> Programı Oluştur ve Göster
+              </button>
+            </div>
+          </div>
+
+          <!-- SİHİRBAZ ADIM 4: Oluşturulan Program Sonucu -->
+          <div class="wizard-step" id="wizard-step-4">
+            <div id="generated-program-result">
+              <!-- Dinamik doldurulacak -->
+            </div>
+            <div class="wizard-nav">
+              <button class="btn btn-secondary" onclick="goToWizardStep(1)">Ayarları Değiştir</button>
+              <button class="btn btn-primary" onclick="saveCurrentProgram()">
+                <i class="fa-solid fa-bookmark"></i> Programı Kaydet
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BÖLÜM 4: PROGRAMLARIM (MY SAVED PROGRAMS) ==================== -->
+  <section id="section-programlarim" class="section" style="display:none;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Kayıtlı Antrenmanlar</span>
+        <h2 class="section-title">Oluşturduğum Programlar</h2>
+        <p class="section-desc">Daha önce ürettiğin ve kaydettiğin tüm özel calisthenics antrenman planların burada listelenir.</p>
+      </div>
+
+      <div id="saved-programs-container">
+        <!-- Dinamik basılacak -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODALLAR ==================== -->
+
+  <!-- 1. HAREKET DETAY MODALI -->
+  <div class="modal-overlay" id="skill-detail-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeModal('skill-detail-modal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="modal-media-stage" id="modal-media-stage">
+        <div class="modal-media-blur-bg" id="m-skill-blur-bg"></div>
+        <img id="m-skill-img" src="" alt="Hareket Görseli" class="modal-media-main-img">
+      </div>
+
+      <div class="modal-skill-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h2 id="m-skill-name">Front Lever</h2>
+          <span class="card-level-badge" id="m-skill-level">İleri Seviye</span>
+        </div>
+        <div style="font-size:0.9rem; color:var(--accent-cyan); font-weight:600;" id="m-skill-sub">Ön Düzlem Duruşu</div>
+      </div>
+
+      <p style="font-size:0.95rem; color:var(--text-muted); line-height:1.6;" id="m-skill-desc">Açıklama</p>
+
+      <div class="modal-section-title"><i class="fa-solid fa-dumbbell"></i> Çalışan Ana Kaslar</div>
+      <div class="skill-muscles" id="m-skill-muscles"></div>
+
+      <!-- Gereken Asgari Güç Kontrol Listesi -->
+      <div class="modal-section-title"><i class="fa-solid fa-gauge-high"></i> Gereken Asgari Temel Güç Eşikleri</div>
+      <div class="reqs-box" id="m-skill-reqs"></div>
+
+      <!-- Kademeli İlerleme Basamakları -->
+      <div class="modal-section-title"><i class="fa-solid fa-stairs"></i> Kademeli İlerleme Basamakları (Progressions)</div>
+      <div class="progression-steps" id="m-skill-progressions"></div>
+
+      <!-- Üye Olmayanlar İçin Kilit Uyarısı -->
+      <div id="m-guest-lock" class="member-lock-banner">
+        <h4><i class="fa-solid fa-lock"></i> Özel Programlama ve Aşama Rehberi</h4>
+        <p>Bu hareket için vücut gücüne özel teknik ve kuvvet programı oluşturmak için ücretsiz üye ol!</p>
+        <button class="btn btn-primary btn-sm" onclick="closeModal('skill-detail-modal'); openModal('register-modal');">
+          Ücretsiz Üye Ol
+        </button>
+      </div>
+
+      <!-- Üyeler İçin Hedef Ekleme Aksiyonu -->
+      <div id="m-user-actions" style="margin-top:24px; display:flex; gap:12px;">
+        <button class="btn btn-primary" id="m-btn-toggle-goal" style="flex:1;" onclick="toggleSkillGoalFromModal()">
+          <i class="fa-solid fa-plus"></i> Hedeflerime Ekle
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TEMEL HAREKETLER & GÜÇ SEVİYESİ DEĞERLENDİRME MODALI -->
+  <div class="modal-overlay" id="assessment-modal">
+    <div class="modal-content" style="max-width:620px;">
+      <button class="modal-close-btn" onclick="closeModal('assessment-modal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <h2 style="font-size:1.6rem; font-weight:800; margin-bottom:8px;">
+        <i class="fa-solid fa-bolt" style="color:var(--accent-cyan); margin-right:8px;"></i>
+        Temel Güç & Seviye Analizi
+      </h2>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:24px;">
+        Calisthenics'teki mevcut gücünü ölçerek seçtiğin hedefler için doğru programı (Güç Hazırlığı mı yoksa Direkt Teknik mi) belirleyeceğiz.
+      </p>
+
+      <form id="assessment-form" onsubmit="handleAssessmentSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nizami Barfiks (Tekrar) <small style="color:var(--text-dim); display:block; font-size:0.75rem;">Çene bar üstüne, tam kilitli iniş</small></label>
+            <input type="number" id="stat-pullups" class="form-input" min="0" max="60" value="8" required>
+          </div>
+          <div class="form-group">
+            <label>Patlayıcı Göğse Barfiks (Tekrar) <small style="color:var(--accent-cyan); display:block; font-size:0.75rem;">Chest-to-Bar / Muscle-up patlayıcılığı</small></label>
+            <input type="number" id="stat-chest-to-bar" class="form-input" min="0" max="40" value="3" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Paralel Bar Dips (Tekrar) <small style="color:var(--text-dim); display:block; font-size:0.75rem;">Derin 90° altı itiş kuvveti</small></label>
+            <input type="number" id="stat-dips" class="form-input" min="0" max="80" value="12" required>
+          </div>
+          <div class="form-group">
+            <label>Pseudo Planche / Pike Şınav (Tekrar) <small style="color:var(--accent-cyan); display:block; font-size:0.75rem;">Eller kalça hizasında öne eğik şınav (Planche torku)</small></label>
+            <input type="number" id="stat-pseudo-pushups" class="form-input" min="0" max="50" value="5" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Hollow Body Hold (Saniye) <small style="color:var(--text-dim); display:block; font-size:0.75rem;">Bel yere yapışık gövde gerginliği</small></label>
+            <input type="number" id="stat-hollow" class="form-input" min="0" max="180" value="30" required>
+          </div>
+          <div class="form-group">
+            <label>Duvarda Amut / Handstand (Saniye) <small style="color:var(--text-dim); display:block; font-size:0.75rem;">Düz omuz itiş ve denge tabanı</small></label>
+            <input type="number" id="stat-handstand" class="form-input" min="0" max="180" value="20" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>L-Sit Tutuşu (Saniye) <small style="color:var(--text-dim); display:block; font-size:0.75rem;">Skapula depresyonu & core sıkışması</small></label>
+          <input type="number" id="stat-lsit" class="form-input" min="0" max="120" value="10" required>
+        </div>
+
+        <div style="margin-top:20px;">
+          <button type="submit" class="btn btn-primary" style="width:100%;">
+            <i class="fa-solid fa-floppy-disk"></i> Bilgileri Kaydet ve Analizi Güncelle
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. GİRİŞ YAP MODALI -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-content" style="max-width:440px;">
+      <button class="modal-close-btn" onclick="closeModal('login-modal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:8px;">Giriş Yap</h2>
+      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">Programlarına ve hedeflerine erişmek için giriş yap.</p>
+
+      <form onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label>E-Posta Adresi</label>
+          <input type="email" id="login-email" class="form-input" placeholder="ornek@mail.com" required>
+        </div>
+        <div class="form-group">
+          <label>Şifre</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Giriş Yap</button>
+      </form>
+
+      <div style="text-align:center; margin-top:20px; font-size:0.85rem; color:var(--text-muted);">
+        Hesabın yok mu? <a href="javascript:void(0)" onclick="closeModal('login-modal'); openModal('register-modal');" style="color:var(--accent-cyan); font-weight:600;">Ücretsiz Kayıt Ol</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. KAYIT OL MODALI -->
+  <div class="modal-overlay" id="register-modal">
+    <div class="modal-content" style="max-width:440px;">
+      <button class="modal-close-btn" onclick="closeModal('register-modal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:8px;">Aether'a Katıl</h2>
+      <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">Hemen üye ol, temel gücünü analiz edip hedeflerine özel programını oluşturalım.</p>
+
+      <form onsubmit="handleRegisterSubmit(event)">
+        <div class="form-group">
+          <label>Ad Soyad</label>
+          <input type="text" id="reg-name" class="form-input" placeholder="Adın" required>
+        </div>
+        <div class="form-group">
+          <label>E-Posta Adresi</label>
+          <input type="email" id="reg-email" class="form-input" placeholder="ornek@mail.com" required>
+        </div>
+        <div class="form-group">
+          <label>Şifre</label>
+          <input type="password" id="reg-password" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:8px;">Hesap Oluştur</button>
+      </form>
+
+      <div style="text-align:center; margin-top:20px; font-size:0.85rem; color:var(--text-muted);">
+        Zaten üye misin? <a href="javascript:void(0)" onclick="closeModal('register-modal'); openModal('login-modal');" style="color:var(--accent-cyan); font-weight:600;">Giriş Yap</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. BaaS (BACKEND AS A SERVICE) VE BULUT VERİTABANI MODALI -->
+  <div class="modal-overlay" id="baas-modal">
+    <div class="modal-content" style="max-width:540px;">
+      <button class="modal-close-btn" onclick="closeModal('baas-modal')"><i class="fa-solid fa-xmark"></i></button>
+
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <i class="fa-solid fa-cloud" style="color:var(--accent-cyan); font-size:1.4rem;"></i>
+        <h2 style="font-size:1.4rem; font-weight:800; margin:0;">BaaS & Bulut Veritabanı</h2>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:20px;">
+        Bu uygulama PHP ve yerel SQL sunucuları yerine tamamen <strong>Google Firebase (Cloud Firestore & Authentication)</strong> BaaS platformu üzerinden çalışır.
+      </p>
+
+      <div class="baas-card">
+        <h4><i class="fa-solid fa-circle-nodes" style="color:var(--accent-cyan);"></i> Aktif BaaS Durumu</h4>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;">
+          <span style="font-size:0.88rem; color:var(--text-dim);">Servis Sağlayıcı:</span>
+          <span id="baas-modal-provider" style="font-weight:700; color:#fff;">Firebase (Cloud Firestore)</span>
+        </div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+          <span style="font-size:0.88rem; color:var(--text-dim);">Bağlantı:</span>
+          <span id="baas-modal-status" style="font-weight:700; color:#00e676;"><i class="fa-solid fa-check"></i> Aktif</span>
+        </div>
+      </div>
+
+      <div class="baas-card">
+        <h4><i class="fa-solid fa-key" style="color:var(--accent-orange);"></i> Özel Firebase Yapılandırması</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:10px;">
+          Kendi Firebase projenizi bağlamak için Firebase Konsolu'ndan aldığınız <code>firebaseConfig</code> JSON nesnesini yapıştırabilirsiniz:
+        </p>
+        <textarea class="baas-textarea" id="baas-config-input" placeholder='{ "apiKey": "AIzaSy...", "authDomain": "...", "projectId": "..." }'></textarea>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+          <button class="btn btn-primary btn-sm" onclick="saveCustomBaaSConfig()" style="flex:1;">
+            <i class="fa-solid fa-floppy-disk"></i> Yapılandırmayı Kaydet
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="resetBaaSConfig()" title="Varsayılan Yapılandırmaya Dön">
+            <i class="fa-solid fa-rotate-left"></i> Sıfırla
+          </button>
+        </div>
+      </div>
+
+      <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+        <i class="fa-solid fa-circle-info" style="color:var(--accent-cyan);"></i> 
+        <strong>Supabase veya Firebase:</strong> Veritabanı ve kimlik doğrulama doğrudan JavaScript API'leri (SDK) ile istemciden yönetildiği için hiçbir harici PHP sunucu kurulumu gerekmez.
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Bildirim Konteyneri -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <div class="brand-logo">
+          <div class="logo-icon"><i class="fa-solid fa-person-running"></i></div>
+          <span>AETHER<span>CALISTHENICS</span></span>
+        </div>
+        <p>
+          Beden ağırlığı ustalığı için bilimsel ve akıllı antrenman platformu. 
+          Freestyle, Statik ve Dinamik calisthenics hareketlerinde güvenli ve progresif gelişim.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Hızlı Bağlantılar</h5>
+        <ul>
+          <li><a href="#home" onclick="switchSection('home')">Ana Sayfa</a></li>
+          <li><a href="#alanlar" onclick="switchSection('alanlar')">Disiplin Alanları</a></li>
+          <li><a href="#hedeflerim" onclick="switchSection('hedeflerim')">Hedeflerim & Program Oluştur</a></li>
+          <li><a href="#programlarim" onclick="switchSection('programlarim')">Kayıtlı Programlarım</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Kategoriler</h5>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="switchSection('alanlar'); selectCategory('statik');">Statik (Front Lever, Planche)</a></li>
+          <li><a href="javascript:void(0)" onclick="switchSection('alanlar'); selectCategory('dinamik');">Dinamik (Muscle-Up, HSPU)</a></li>
+          <li><a href="javascript:void(0)" onclick="switchSection('alanlar'); selectCategory('freestyle');">Freestyle (360, 540, Salto)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Aether Calisthenics. Tüm hakları saklıdır. HTML5, CSS3, Vanilla JavaScript & Google Firebase BaaS.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== AETHER AI KOÇ (FLOATING WIDGET) ==================== -->
+  <div class="ai-widget-launcher" id="ai-widget-launcher" title="Aether AI Koç ile Konuş">
+    <div class="ai-launcher-pulse"></div>
+    <i class="fa-solid fa-robot"></i>
+    <span class="ai-launcher-badge">AI</span>
+  </div>
+
+  <div class="ai-chat-window" id="ai-chat-window">
+    <!-- Header -->
+    <div class="ai-chat-header">
+      <div class="ai-header-profile">
+        <div class="ai-avatar">
+          <i class="fa-solid fa-brain"></i>
+          <span class="ai-online-dot"></span>
+        </div>
+        <div class="ai-header-info">
+          <h4>Aether AI Koç</h4>
+          <span>Calisthenics & Spor Asistanı</span>
+        </div>
+      </div>
+      <div class="ai-header-actions">
+        <button id="ai-close-btn" title="Kapat"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <!-- Hızlı Öneri Çipleri -->
+    <div class="ai-quick-pills">
+      <button type="button" class="ai-pill-btn" onclick="AICoach.askQuickQuestion('Planche için dirseklerim acıyor, ne yapmalıyım?')">Planche Dirsek Ağrısı</button>
+      <button type="button" class="ai-pill-btn" onclick="AICoach.askQuickQuestion('Front Lever da kalçam neden düşüyor?')">Front Lever Formu</button>
+      <button type="button" class="ai-pill-btn" onclick="AICoach.askQuickQuestion('Muscle-Up geçişini nasıl hızlandırırım?')">Muscle-Up Geçişi</button>
+      <button type="button" class="ai-pill-btn" onclick="AICoach.askQuickQuestion('Bana özel güç ve durum analizi yap')">Bana Özel Analiz</button>
+      <button type="button" class="ai-pill-btn" onclick="AICoach.askQuickQuestion('Bugün ne çalışmalıyım?')">Bugün Ne Çalışayım?</button>
+    </div>
+
+    <!-- Mesaj Listesi -->
+    <div class="ai-messages-container" id="ai-messages-container">
+      <!-- Dinamik mesajlar buraya eklenecek -->
+    </div>
+
+    <!-- Giriş Formu -->
+    <form class="ai-input-form" id="ai-chat-form">
+      <input type="text" id="ai-user-input" class="ai-input-field" placeholder="Sporla ilgili bir soru sor (örn: Planche dirsek ağrısı, protein ihtiyacı)..." autocomplete="off" required>
+      <button type="submit" class="ai-send-btn" id="ai-send-btn" title="Gönder">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Firebase BaaS (Backend as a Service) SDKs: Cloud Firestore & Authentication -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <!-- Uygulama Scriptleri -->
+  <script src="js/data.js"></script>
+  <script src="js/programGenerator.js"></script>
+  <script src="js/firebaseConfig.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/aiCoach.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
